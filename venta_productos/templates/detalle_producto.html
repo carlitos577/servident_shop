@@ -435,7 +435,7 @@
             {% endif %}
 -->
             {% for foto in fotos_producto %}
-                <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://b628-45-183-185-10.ngrok-free.app{{ foto.photo_url.url|urlencode }}"
+                <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://servident-shop.onrender.com{{ foto.photo_url.url|urlencode }}"
                     class="enlace-whatsapp">
                     Preguntar por WhatsApp</a>
             {% endfor %}
