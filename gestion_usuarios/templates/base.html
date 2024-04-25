@@ -1,0 +1,148 @@
+<!-- templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --font-large-color: white;
+            --font-small-color: #9f9f9f;
+            --main-color: #4cb6c3;
+            --bg-color-1: #0b2a56;
+            --bg-color-2: #3273cf;
+        }
+
+        /* Estilos específicos para la apariencia de dentista */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color-1);
+            color: var(--font-large-color);
+        }
+
+        a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: var(--main-color);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: var(--bg-color-2);
+            overflow: hidden;
+        }
+
+        nav ul li {
+            float: left;
+        }
+
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            background-color: var(--main-color);
+        }
+
+        h1,
+        h2 {
+            color: var(--main-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid var(--main-color);
+            padding: 8px;
+        }
+
+        th {
+            background-color: var(--bg-color-2);
+            color: white;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="file"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid var(--main-color);
+            border-radius: 4px;
+            background-color: white;
+            color: var(--main-color);
+        }
+
+        input[type="submit"] {
+            background-color: var(--main-color);
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para imágenes */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+
+
+        
+    </style>
+    <title>{% block title %}Mi Sitio Web{% endblock %}</title>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+            <!--
+            <li><a href="{% url 'usuarios_list' %}">Lista de Usuarios</a></li>
+            -->
+            <li><a href="{% url 'producto_list' %}">Lista de Productos</a></li>
+            <li>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Cerrar Sesión">
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div>
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

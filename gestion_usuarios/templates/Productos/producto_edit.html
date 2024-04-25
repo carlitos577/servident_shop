@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Producto{% endblock %}
+
+{% block content %}
+<h1>Editar Producto</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="title">Título:</label><br>
+    <input type="text" id="title" name="title" value="{{ producto.title }}"><br>
+    <label for="price">Precio (Bs):</label><br>
+    <input type="text" id="price" name="price" value="{{ producto.price }}"><br><br>
+    <button type="submit">Guardar Cambios</button>
+</form>
+{% endblock %}

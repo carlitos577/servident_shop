@@ -1,0 +1,485 @@
+{% extends 'layouts.html' %}
+{% block title %}Detalle del Producto{% endblock %}
+{% block content %}
+<style>
+    :root {
+        --primary-color: #007bff;
+        /* Color azul como ejemplo */
+        --contenedores-background: rgba(255, 255, 255, 0.9);
+        /* Fondo del nav con transparencia */
+    }
+
+    body {
+        background-color: #007bff;
+    }
+
+    .foto-producto-unico img {
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        object-fit: cover;
+
+    }
+
+    .content-container-producto-detalles {
+        width: 100%;
+        height: 440px;
+        display: flex;
+
+        align-items: center;
+    }
+
+    .foto-producto {
+
+        height: 90%;
+        width: 40%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 20px;
+        margin: 10px;
+        background-color: var(--contenedores-background);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .detalle-producto {
+        width: 60%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .detalle-producto-contexto {
+        background-color: var(--contenedores-background);
+        height: 40%;
+        width: 85%;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        flex-direction: column;
+        padding: 20px;
+        margin: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .detalle-producto-contexto h5 {
+        color: #333;
+        /* Color oscuro para el texto */
+        margin: 0;
+        padding-bottom: 10px;
+        /* Espacio debajo del título */
+    }
+
+    .detalle-producto-contexto p {
+        color: #666;
+        /* Color más suave para el precio */
+        margin: 0;
+        padding-bottom: 20px;
+        /* Espacio debajo del precio */
+    }
+
+    .detalle-producto-contexto a {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .detalle-producto-contexto a:hover {
+        background-color: darken(var(--primary-color), 10%);
+    }
+
+    .foto-producto-unico {
+        height: 70%;
+        width: 100%;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .foto-producto-carrusel {
+        height: 60%;
+        width: 85%;
+        padding: 20px;
+        margin: 10px;
+        background-color: var(--contenedores-background);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        display: flex;
+        gap: 20px;
+        flex-direction: row;
+    }
+
+    .foto-producto-carrusel-photo {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        /* Oculta cualquier parte de la imagen que exceda las dimensiones del contenedor */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        /* Opcional: Añade bordes redondeados para un look más suave */
+        margin: 5px;
+        /* Espacio entre fotos */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        /* Sombra ligera para dar profundidad */
+    }
+
+    .foto-producto-carrusel-photo img {
+        width: 100%;
+        /* Ajusta la imagen al ancho del contenedor */
+        height: auto;
+        /* Mantiene la proporción de la imagen */
+        min-height: 100%;
+        /* Asegura que la imagen cubra la altura del contenedor */
+        object-fit: cover;
+        /* Asegura que la imagen cubra todo el espacio sin distorsionarse */
+    }
+
+    .foto-producto-carrusel-btn {
+        height: 30%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        margin: 10px;
+
+        border-radius: 8px;
+        flex-direction: row;
+    }
+
+    .foto-producto-carrusel-btn button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .foto-producto-carrusel-btn button:hover {
+        background-color: darken(var(--primary-color), 10%);
+        transform: scale(1.05);
+
+    }
+
+    .foto-producto-carrusel-btn button:active {
+        transform: scale(0.95);
+    }
+
+
+    .foto-producto-unico-foto {
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        margin: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilos para pantallas más grandes (por ejemplo, pantallas de escritorio) */
+    @media (max-width: 768px) {
+        /* Estilos específicos para pantallas más grandes */
+
+        body {
+            background-color: #007bff;
+        }
+
+        .foto-producto-unico img {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            object-fit: cover;
+
+        }
+
+        .content-container-producto-detalles {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .foto-producto {
+
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+            background-color: var(--contenedores-background);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .detalle-producto {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .detalle-producto-contexto {
+            background-color: var(--contenedores-background);
+            height: 40%;
+            width: 85%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .detalle-producto-contexto h5 {
+            color: #333;
+            /* Color oscuro para el texto */
+            margin: 0;
+            padding-bottom: 10px;
+            /* Espacio debajo del título */
+        }
+
+        .detalle-producto-contexto p {
+            color: #666;
+            /* Color más suave para el precio */
+            margin: 0;
+            padding-bottom: 20px;
+            /* Espacio debajo del precio */
+        }
+
+        .detalle-producto-contexto a {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .detalle-producto-contexto a:hover {
+            background-color: darken(var(--primary-color), 10%);
+        }
+
+        .foto-producto-unico {
+            height: 70%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .foto-producto-carrusel {
+            height: 60%;
+            width: 85%;
+            padding: 20px;
+            margin: 10px;
+            background-color: var(--contenedores-background);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            gap: 20px;
+            flex-direction: row;
+        }
+
+        .foto-producto-carrusel-photo {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            /* Oculta cualquier parte de la imagen que exceda las dimensiones del contenedor */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            /* Opcional: Añade bordes redondeados para un look más suave */
+            margin: 5px;
+            /* Espacio entre fotos */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            /* Sombra ligera para dar profundidad */
+        }
+
+        .foto-producto-carrusel-photo img {
+            width: 100%;
+            /* Ajusta la imagen al ancho del contenedor */
+            height: auto;
+            /* Mantiene la proporción de la imagen */
+            min-height: 100%;
+            /* Asegura que la imagen cubra la altura del contenedor */
+            object-fit: cover;
+            /* Asegura que la imagen cubra todo el espacio sin distorsionarse */
+        }
+
+        .foto-producto-carrusel-btn {
+            height: 30%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px 0px;
+            margin: 0;
+            border-radius: 8px;
+            flex-direction: row;
+
+        }
+
+        .foto-producto-carrusel-btn button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .foto-producto-carrusel-btn button:hover {
+            background-color: darken(var(--primary-color), 10%);
+            transform: scale(1.05);
+
+        }
+
+        .foto-producto-carrusel-btn button:active {
+            transform: scale(0.95);
+        }
+
+
+        .foto-producto-unico-foto {
+            width: 300px;
+            height: 300px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            margin: 30px 0px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+        }
+
+    }
+</style>
+<div class="content-container-producto-detalles">
+    <div class="foto-producto">
+        <div class="foto-producto-unico">
+            <div class="foto-producto-unico-foto">
+                {% for foto in fotos_producto %}
+                    <img src="{{ foto.photo_url.url }}" class="foto-producto1" alt="Foto del producto" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="foto-producto-carrusel-btn">
+            <button id="anterior" class="" onclick="mostrarFotoAnterior()">Anterior</button>
+            <button id="siguiente" class="" onclick="mostrarFotoSiguiente()">Siguiente</button>
+        </div>
+    </div>
+
+    <div class="detalle-producto">
+        <div class="detalle-producto-contexto">
+            <h5 class="">{{ producto.title }}</h5>
+            <p class="">Precio: {{ producto.price }} Bs</p>
+            <br>
+            <h5 class="">Usando los botones elija la foto del producto</h5>
+            <!--
+<a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: {{ request.build_absolute_uri|urlencode }}{{ foto.photo_url.url|urlencode }}"
+                class="">Preguntar por WhatsApp</a>
+
+            {% if fotos_producto %}
+                {% with foto=fotos_producto.0 %}
+                    <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: {{ foto.photo_url.url|urlencode }}"
+                       class="">Preguntar por WhatsApp</a>
+                {% endwith %}
+            {% endif %}
+            
+
+
+
+            {% if fotos_producto %}
+            {% with foto=fotos_producto.0 %}
+            <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://b628-45-183-185-10.ngrok-free.app{{ foto.photo_url.url|urlencode }}"
+                class="">Preguntar por WhatsApp</a>
+            {% endwith %}
+            {% endif %}
+-->
+            {% for foto in fotos_producto %}
+                <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://b628-45-183-185-10.ngrok-free.app{{ foto.photo_url.url|urlencode }}"
+                    class="enlace-whatsapp">
+                    Preguntar por WhatsApp</a>
+            {% endfor %}
+
+
+        </div>
+        <div class="foto-producto-carrusel">
+            {% for foto in fotos_producto %}
+            <div class="foto-producto-carrusel-photo">
+                <img src="{{ foto.photo_url.url }}" class="" alt="Foto del producto">
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    var fotos = document.getElementsByClassName("foto-producto1");
+    var enlace_whatsapp = document.getElementsByClassName("enlace-whatsapp");
+    var fotoActual = 0;
+
+    
+    function mostrarFotoAnterior() {
+        fotos[fotoActual].style.display = "none";
+
+        enlace_whatsapp[fotoActual].style.display="none";
+        
+        fotoActual = (fotoActual - 1 + fotos.length) % fotos.length;
+        fotos[fotoActual].style.display = "block";
+        
+        enlace_whatsapp[fotoActual].style.display="block";
+    }
+
+    function mostrarFotoSiguiente() {
+        fotos[fotoActual].style.display = "none";
+
+        enlace_whatsapp[fotoActual].style.display="none";
+
+        fotoActual = (fotoActual + 1) % fotos.length;
+        fotos[fotoActual].style.display = "block";
+
+        enlace_whatsapp[fotoActual].style.display="block";
+    }
+
+</script>
+{% endblock %}

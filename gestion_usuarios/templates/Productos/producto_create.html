@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Productos{% endblock %}
+
+{% block content %}
+<h1>Crear Nuevo Producto</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="title">Título:</label><br>
+    <input type="text" id="title" name="title"><br>
+    <label for="price">Precio (Bs):</label><br>
+    <input type="number" id="price" name="price" step="0.01"><br>
+    <input type="submit" value="Crear Producto">
+</form>
+{% endblock %}

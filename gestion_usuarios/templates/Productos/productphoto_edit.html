@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Foto de Producto{% endblock %}
+
+{% block content %}
+<h2>Editar Foto de Producto</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="product">Producto:</label><br>
+    <p>{{ product.title }}</p>
+    <input type="hidden" name="product" value="{{ product.id }}">
+    <label for="photo_url">Foto:</label><br>
+    <img src="{{ photo.photo_url.url }}" alt="Photo"><br>
+    <input type="file" id="photo_url" name="photo_url"><br><br>
+    <input type="submit" value="Guardar Cambios">
+</form>
+{% endblock %}

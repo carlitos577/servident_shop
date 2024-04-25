@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Crear Foto de Producto{% endblock %}
+
+{% block content %}
+<h2>Crear Foto de Producto</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if product %}
+    <!-- Si el producto ya está seleccionado previamente, muestra el título del producto -->
+    <p>Producto: {{ product.title }}</p>
+    <!-- Oculta el campo de selección de producto -->
+    <input type="hidden" name="product" value="{{ product.id }}">
+    {% else %}
+    <!-- Si el producto no está seleccionado previamente, muestra el campo de selección de producto -->
+    <label for="product">Producto:</label><br>
+    <select name="product" id="product">
+        {% for product in products %}
+        <option value="{{ product.id }}">{{ product.title }}</option>
+        {% endfor %}
+    </select><br>
+    {% endif %}
+    <label for="photo_url">Foto:</label><br>
+    <input type="file" id="photo_url" name="photo_url"><br><br>
+    <input type="submit" value="Subir Foto">
+</form>
+
+{% if product %}
+<!-- Tabla de todas las fotos del producto -->
+<h2>Todas las Fotos del Producto "{{ product.title }}"</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Foto</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for photo in product.productphoto_set.all %}
+        <tr>
+            <td style="width: 30%;" ><img src="{{ photo.photo_url.url }}" alt="Photo"></td>
+            <td>
+                <a href="{% url 'productphoto_edit' photo.id %}">Editar</a>
+                <a href="{% url 'productphoto_delete' photo.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

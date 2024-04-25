@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Mi Sitio Web{% endblock %}</title>
+</head>
+<style>
+    :root {
+        --primary-color: #007bff; /* Color azul como ejemplo */
+        --nav-background: rgba(255, 255, 255, 0.9); /* Fondo del nav con transparencia */
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: var(--nav-background);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        z-index: 1000; /* Asegura que el nav esté sobre el contenido */
+        transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+    }
+
+    nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 10px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 0 15px;
+    }
+
+    nav ul li a {
+        text-decoration: none;
+        color: var(--primary-color);
+    }
+
+    .content-container {
+        margin-top: 60px; /* Espacio para el nav fijo */
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+
+        width: 100%;
+        height: 100%;
+        gap: 10px;
+    }
+</style>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'index' %}">Inicio</a></li>
+        </ul>
+    </nav>
+    <div class="content-container">
+        <!-- Aquí va el contenido de tu página -->
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

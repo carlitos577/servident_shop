@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        :root {
+            --font-large-color: white;
+            --font-small-color: #9f9f9f;
+            --main-color: #4cb6c3;
+            --bg-color-1: #0b2a56;
+            --bg-color-2: #0b2a56;
+        }
+
+        /* Estilos específicos para la apariencia de dentista */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color-1);
+            color: var(--font-large-color);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            background-color: var(--bg-color-2);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: white;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 2px solid var(--main-color);
+            border-radius: 4px;
+            background-color: white;
+            color: var(--main-color);
+        }
+
+        input[type="submit"] {
+            background-color: var(--main-color);
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Login</h2>
+        {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+        {% endif %}
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <input type="submit" value="Login" class="btn-login">
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

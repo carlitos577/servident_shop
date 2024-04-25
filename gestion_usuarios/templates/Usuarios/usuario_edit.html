@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Usuarios{% endblock %}
+
+{% block content %}
+<h2>Editar Usuario</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="full_name">Nombre completo:</label><br>
+    <input type="text" id="full_name" name="full_name" value="{{ usuario.full_name }}"><br>
+    <label for="username">Nombre de usuario:</label><br>
+    <input type="text" id="username" name="username" value="{{ usuario.username }}"><br>
+    <label for="password">Contraseña:</label><br>
+    <input type="password" id="password" name="password" value="{{ usuario.password }}"><br>
+    <label for="phone_number">Número de teléfono:</label><br>
+    <input type="text" id="phone_number" name="phone_number" value="{{ usuario.phone_number }}"><br>
+    <label for="profile_picture">Foto de perfil:</label><br>
+    <img src="{{ usuario.profile_picture.url }}" width="100" height="100"><br>
+    <input type="file" id="profile_picture" name="profile_picture"><br><br>
+    <input type="submit" value="Guardar Cambios">
+</form>
+{% endblock %}

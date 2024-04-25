@@ -1,0 +1,246 @@
+{% extends 'layouts.html' %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+
+{% for item in productos_con_imagen %}
+<style>
+    .content-container-producto-card-foto-contexto img {
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        object-fit: cover;
+    }
+
+    .content-container-producto-card {
+        width: 200px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #007bff;
+        padding: 10px;
+        border-radius: 15px;
+        gap: 10px;
+    }
+
+    .content-container-producto-card-foto {
+        height: 70%;
+        width: 100%;
+        background-color: aliceblue;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .content-container-producto-card-foto-contexto {
+        width: 80%;
+        height: 80%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        margin: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+
+
+    .content-container-producto-card-detalle {
+        height: 30%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        background-color: aliceblue;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    .content-container-producto-card-detalle-contexto h5 {
+        color: #333;
+        margin: 5px 0px 0px 5px;
+        padding-bottom: 20px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .content-container-producto-card-detalle-contexto p {
+        color: #666;
+        /* Color más suave para el precio */
+        margin: 0px 0px 5px 5px;
+
+        /* Espacio debajo del precio */
+    }
+
+    .content-container-producto-card-detalle a {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 10px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .content-container-producto-card-detalle a:hover {
+        background-color: darken(var(--primary-color), 10%);
+    }
+
+
+
+
+
+    .content-container-producto-card-detalle-contexto {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .content-container-producto-card-detalle-btn {
+        width: 100%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    @media (max-width: 768px) {
+        .content-container-producto-card-foto-contexto img {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            object-fit: cover;
+        }
+
+        .content-container-producto-card {
+            width: 40%;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #007bff;
+            padding: 10px;
+            border-radius: 15px;
+            gap: 10px;
+        }
+
+        .content-container-producto-card-foto {
+            height: 70%;
+            width: 100%;
+            background-color: aliceblue;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .content-container-producto-card-foto-contexto {
+            width: 80%;
+            height: 80%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            margin: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+        .content-container-producto-card-detalle {
+            height: 30%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            background-color: aliceblue;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .content-container-producto-card-detalle-contexto h5 {
+            color: #333;
+            margin: 5px 0px 0px 5px;
+            padding-bottom: 20px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .content-container-producto-card-detalle-contexto p {
+            color: #666;
+            /* Color más suave para el precio */
+            margin: 0px 0px 5px 5px;
+
+            /* Espacio debajo del precio */
+        }
+
+        .content-container-producto-card-detalle a {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .content-container-producto-card-detalle a:hover {
+            background-color: darken(var(--primary-color), 10%);
+        }
+
+
+
+
+
+        .content-container-producto-card-detalle-contexto {
+            width: 100%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .content-container-producto-card-detalle-btn {
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+</style>
+<div class="content-container-producto-card">
+    <div class="content-container-producto-card-foto">
+        <div class="content-container-producto-card-foto-contexto">
+            <img src="{{ item.imagen.photo_url.url }}" class="card-img-top" alt="...">
+        </div>
+    </div>
+    <div class="content-container-producto-card-detalle">
+        <div class="content-container-producto-card-detalle-contexto">
+            <h5 class="card-title">{{ item.producto.title }}</h5>
+            <p class="card-text">Precio: {{ item.producto.price }}</p>
+        </div>
+        <div class="content-container-producto-card-detalle-btn">
+            <a href="{% url 'detalle_producto' producto_id=item.producto.id %}" class="btn btn-primary">Ver más</a>
+        </div>
+    </div>
+</div>
+
+
+{% endfor %}
+
+{% endblock %}
