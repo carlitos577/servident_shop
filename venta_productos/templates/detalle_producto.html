@@ -444,12 +444,12 @@
             <div class="detalle-producto-contexto-btn">
                 {% for foto in fotos_producto %}
                 <a href="https://api.whatsapp.com/send?phone=59177641671&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://servident-shop.onrender.com{{ foto.photo_url.url|urlencode }}"
-                class="enlace-whatsapp1" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
-                    Preguntar por WhatsApp</a>
+                class="enlace-whatsapp1" {% if forloop.counter != 1 %}style="display: none;"{% endif %}> 
+                    Consultar disponibilidad </a>
 
                 <a href="https://api.whatsapp.com/send?phone=59176876682&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://servident-shop.onrender.com{{ foto.photo_url.url|urlencode }}"
-                class="enlace-whatsapp2" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
-                    Preguntar por WhatsApp</a>
+                class="enlace-whatsapp2" {% if forloop.counter != 1 %}style="display: none;"{% endif %}> 
+                    Consultar disponibilidad </a>
                 {% endfor %}
             </div>
 
