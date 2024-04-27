@@ -9,7 +9,7 @@ class Product(models.Model):
 
 class ProductPhoto(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    photo_url = models.ImageField(upload_to='producto_pictures/', null=True, blank=True)
+    photo_url = models.BinaryField(null=True, blank=True)
 
     def __str__(self):
         return f"Photo of {self.product.title}"

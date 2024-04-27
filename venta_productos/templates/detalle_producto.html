@@ -1,6 +1,7 @@
 {% extends 'layouts.html' %}
 {% block title %}Detalle del Producto{% endblock %}
 {% block content %}
+{% load base64_encode %}
 <style>
     :root {
         --primary-color: #007bff;
@@ -249,12 +250,12 @@
             width: 85%;
             display: flex;
             align-items: flex-start;
-            justify-content: center;
             flex-direction: column;
             padding: 20px;
             margin: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            justify-content: center;
         }
 
         .detalle-producto-contexto h5 {
@@ -387,7 +388,13 @@
             border-radius: 10px;
             margin: 30px 0px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
 
+        .detalle-producto-contexto-btn{
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
         }
 
     }
@@ -397,7 +404,7 @@
         <div class="foto-producto-unico">
             <div class="foto-producto-unico-foto">
                 {% for foto in fotos_producto %}
-                    <img src="{{ foto.photo_url.url }}" class="foto-producto1" alt="Foto del producto" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
+                <img src="data:image/jpeg;base64,{{ foto.photo_url|b64encode }}" class="foto-producto1" alt="Foto del producto" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
                 {% endfor %}
             </div>
         </div>
@@ -409,10 +416,13 @@
 
     <div class="detalle-producto">
         <div class="detalle-producto-contexto">
-            <h5 class="">{{ producto.title }}</h5>
-            <p class="">Precio: {{ producto.price }} Bs</p>
-            <br>
-            <h5 class="">Usando los botones elija la foto del producto</h5>
+            <div class="detalle-producto-contexto-text">
+                <h5 class="">{{ producto.title }}</h5>
+                <p class="">Precio: {{ producto.price }} Bs</p>
+                
+                <h5 class="">Usando los botones elija la foto del producto</h5>
+            </div>
+            
             <!--
 <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: {{ request.build_absolute_uri|urlencode }}{{ foto.photo_url.url|urlencode }}"
                 class="">Preguntar por WhatsApp</a>
@@ -433,52 +443,77 @@
                 class="">Preguntar por WhatsApp</a>
             {% endwith %}
             {% endif %}
--->
+
+
             {% for foto in fotos_producto %}
-                <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://servident-shop.onrender.com{{ foto.photo_url.url|urlencode }}"
+            <a href="https://api.whatsapp.com/send?phone=59177467120&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: https://servident-shop.onrender.com{{ foto.photo_url.url|urlencode }}"
                     class="enlace-whatsapp">
                     Preguntar por WhatsApp</a>
             {% endfor %}
+        -->
+<div class="detalle-producto-contexto-btn">
+    {% for foto in fotos_producto %}
+    <a href="https://api.whatsapp.com/send?phone=59176876682&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: {{ request.build_absolute_uri|urlencode }}"
+        class="enlace-whatsapp1" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
+        consultar whatsapp 1</a>
 
+        <a href="https://api.whatsapp.com/send?phone=59177641671&amp;text=Buenas, quisiera saber más sobre {{ producto.title|urlencode }}. Aquí está la foto del producto: {{ request.build_absolute_uri|urlencode }}"
+        class="enlace-whatsapp2" {% if forloop.counter != 1 %}style="display: none;"{% endif %}>
+        consultar whatsapp 2</a>
+    {% endfor %}
+</div>
 
         </div>
         <div class="foto-producto-carrusel">
             {% for foto in fotos_producto %}
+            {% if foto.photo_url %}
             <div class="foto-producto-carrusel-photo">
-                <img src="{{ foto.photo_url.url }}" class="" alt="Foto del producto">
+                <img src="data:image/jpeg;base64,{{ foto.photo_url|b64encode }}" alt="Foto del producto">
             </div>
-
+            {% endif %}
             {% endfor %}
+
+
         </div>
     </div>
 </div>
 
 <script>
     var fotos = document.getElementsByClassName("foto-producto1");
-    var enlace_whatsapp = document.getElementsByClassName("enlace-whatsapp");
+    var enlace_whatsapp1 = document.getElementsByClassName("enlace-whatsapp1");
+    var enlace_whatsapp2 = document.getElementsByClassName("enlace-whatsapp2");
+    
     var fotoActual = 0;
 
-    
+
     function mostrarFotoAnterior() {
         fotos[fotoActual].style.display = "none";
 
-        enlace_whatsapp[fotoActual].style.display="none";
+        enlace_whatsapp1[fotoActual].style.display = "none";
+        enlace_whatsapp2[fotoActual].style.display = "none";
         
+
         fotoActual = (fotoActual - 1 + fotos.length) % fotos.length;
         fotos[fotoActual].style.display = "block";
+
+        enlace_whatsapp1[fotoActual].style.display = "block";
+        enlace_whatsapp2[fotoActual].style.display = "block";
         
-        enlace_whatsapp[fotoActual].style.display="block";
     }
 
     function mostrarFotoSiguiente() {
         fotos[fotoActual].style.display = "none";
 
-        enlace_whatsapp[fotoActual].style.display="none";
+        enlace_whatsapp1[fotoActual].style.display = "none";
+        enlace_whatsapp2[fotoActual].style.display = "none";
+        
 
         fotoActual = (fotoActual + 1) % fotos.length;
         fotos[fotoActual].style.display = "block";
 
-        enlace_whatsapp[fotoActual].style.display="block";
+        enlace_whatsapp1[fotoActual].style.display = "block";
+        enlace_whatsapp2[fotoActual].style.display = "block";
+        
     }
 
 </script>

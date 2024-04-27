@@ -1,8 +1,6 @@
 {% extends 'layouts.html' %}
 {% block title %}Inicio{% endblock %}
 {% block content %}
-
-{% for item in productos_con_imagen %}
 <style>
     .content-container-producto-card-foto-contexto img {
         width: 100%;
@@ -223,10 +221,19 @@
         }
     }
 </style>
+
+{% load base64_encode %}
+
+{% for item in productos_con_imagen %}
 <div class="content-container-producto-card">
     <div class="content-container-producto-card-foto">
         <div class="content-container-producto-card-foto-contexto">
-            <img src="{{ item.imagen.photo_url.url }}" class="card-img-top" alt="...">
+            
+            {% if item.primera_imagen %}
+            <!-- Suponiendo que item.primera_imagen.photo_url es binario y ya has implementado el filtro b64encode -->
+            <img src="data:image/jpeg;base64,{{ item.primera_imagen.photo_url|b64encode }}" class="card-img-top"
+                alt="...">
+            {% endif %}
         </div>
     </div>
     <div class="content-container-producto-card-detalle">

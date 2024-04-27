@@ -4,15 +4,19 @@ from .models import Product, ProductPhoto
 # Create your views here.
 
 def index(request):
-    # Obtener todos los productos con su primera imagen
-    productos_con_imagen = []
     productos = Product.objects.all()
+    productos_con_imagen = []
     for producto in productos:
         primera_imagen = producto.productphoto_set.first()
-        productos_con_imagen.append({'producto': producto, 'imagen': primera_imagen})
+        if primera_imagen and primera_imagen.photo_url:
+            productos_con_imagen.append({
+                'producto': producto,
+                'primera_imagen': primera_imagen  # Cambié 'imagen' a 'primera_imagen'
+            })
 
     context = {'productos_con_imagen': productos_con_imagen}
     return render(request, 'index.html', context)
+
 
 def detalle_producto(request, producto_id):
     # Obtener el producto desde la base de datos
