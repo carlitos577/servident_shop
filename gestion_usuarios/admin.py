@@ -5,4 +5,3 @@ from .models import Usuario
 # Register your models here.
 
 admin.site.register(Usuario)
-

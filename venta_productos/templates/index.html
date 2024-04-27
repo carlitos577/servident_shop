@@ -1,6 +1,8 @@
 {% extends 'layouts.html' %}
 {% block title %}Inicio{% endblock %}
 {% block content %}
+
+{% for item in productos_con_imagen %}
 <style>
     .content-container-producto-card-foto-contexto img {
         width: 100%;
@@ -221,28 +223,10 @@
         }
     }
 </style>
-
-{% load base64_encode %}
-
-{% for item in productos_con_imagen %}
 <div class="content-container-producto-card">
     <div class="content-container-producto-card-foto">
         <div class="content-container-producto-card-foto-contexto">
-            
-            {% if item.primera_imagen %}
-                <!-- Suponiendo que item.primera_imagen.photo_url es binario y ya has implementado el filtro b64encode -->
-                {% if item.primera_imagen.photo_url %}
-                    {% if item.primera_imagen.photo_url|is_base64 %}
-                        <img src="data:image/jpeg;base64,{{ item.primera_imagen.photo_url }}" class="card-img-top"
-                            alt="...">
-                    {% else %}
-                        {% with encoded_photo=item.primera_imagen.photo_url|b64encode %}
-                            <img src="data:image/jpeg;base64,{{ encoded_photo }}" class="card-img-top"
-                                alt="...">
-                        {% endwith %}
-                    {% endif %}
-                {% endif %}
-            {% endif %}
+            <img src="{{ item.imagen.photo_url.url }}" class="card-img-top" alt="...">
         </div>
     </div>
     <div class="content-container-producto-card-detalle">
@@ -255,7 +239,8 @@
         </div>
     </div>
 </div>
-{% endfor %}
 
+
+{% endfor %}
 
 {% endblock %}

@@ -16,17 +16,12 @@
         </tr>
     </thead>
     <tbody>
-        {% load base64_encode %}
         {% for usuario in usuarios %}
         <tr>
             <td>{{ usuario.full_name }}</td>
             <td>{{ usuario.username }}</td>
             <td>{{ usuario.phone_number }}</td>
-            <td>
-                {% if usuario.profile_picture %}
-                    <img src="data:image/jpeg;base64,{{ usuario.profile_picture|b64encode }}" width="100" height="100"><br>
-                {% endif %}
-            </td>
+            
             <td>
                 <a href="{% url 'usuario_edit' usuario.id %}">Editar</a>
                 <a href="{% url 'usuario_delete' usuario.id %}">Eliminar</a>

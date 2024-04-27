@@ -55,15 +55,6 @@ def usuario_create(request):
             phone_number=phone_number,
             profile_picture=profile_picture
         )
-
-        # Verificar si se proporciona una nueva imagen
-        if 'profile_picture' in request.FILES:
-            # Eliminar la imagen anterior si existe
-            if usuario.profile_picture:
-                usuario.profile_picture = None
-            # Guardar la nueva imagen
-            profile_picture = request.FILES['profile_picture']
-            usuario.profile_picture = profile_picture.read() if profile_picture else None
         usuario.save()
         # Redirigir a alguna página después de crear el usuario (por ejemplo, al dashboard)
         return redirect('usuarios_list')
@@ -74,20 +65,22 @@ def usuario_create(request):
 def usuario_edit(request, usuario_id):
     # Obtener el usuario a editar
     usuario = Usuario.objects.get(pk=usuario_id)
+
     if request.method == 'POST':
         # Procesar el formulario de edición si se ha enviado
         usuario.full_name = request.POST.get('full_name')
         usuario.username = request.POST.get('username')
         usuario.password = request.POST.get('password')
         usuario.phone_number = request.POST.get('phone_number')
+
         # Verificar si se proporciona una nueva imagen
         if 'profile_picture' in request.FILES:
             # Eliminar la imagen anterior si existe
             if usuario.profile_picture:
-                usuario.profile_picture = None
+                usuario.profile_picture.delete()
             # Guardar la nueva imagen
-            profile_picture = request.FILES['profile_picture']
-            usuario.profile_picture = profile_picture.read() if profile_picture else None
+            usuario.profile_picture = request.FILES['profile_picture']
+
         usuario.save()
         return redirect('usuarios_list')
     else:
@@ -97,8 +90,14 @@ def usuario_edit(request, usuario_id):
 def usuario_delete(request, usuario_id):
     # Obtener el usuario a eliminar
     usuario = get_object_or_404(Usuario, pk=usuario_id)
+
+    # Eliminar la imagen de perfil si existe
+    if usuario.profile_picture:
+        usuario.profile_picture.delete()
+
     # Eliminar el usuario de la base de datos
     usuario.delete()
+
     return redirect('usuarios_list')
 
 def usuarios_list(request):
@@ -169,16 +168,9 @@ def productphoto_create(request, product_id):
     if request.method == 'POST':
         # Procesar el formulario de creación si se ha enviado
         photo_url = request.FILES.get('photo_url')
+        
         # Crear un nuevo objeto ProductPhoto
         product_photo = ProductPhoto(product=product, photo_url=photo_url)
-        # Verificar si se proporciona una nueva imagen
-        if 'photo_url' in request.FILES:
-            # Eliminar la imagen anterior si existe
-            if product_photo.photo_url:
-                product_photo.photo_url = None
-            # Guardar la nueva imagen
-            photo_url = request.FILES['photo_url']
-            product_photo.photo_url = photo_url.read() if photo_url else None
         product_photo.save()
         # Redirigir a alguna página después de crear la foto de producto
         return redirect('producto_list')
@@ -189,18 +181,18 @@ def productphoto_create(request, product_id):
 def productphoto_edit(request, productphoto_id):
     # Obtener la foto de producto a editar
     productphoto = get_object_or_404(ProductPhoto, pk=productphoto_id)
-    
+
     if request.method == 'POST':
         # Procesar el formulario de edición si se ha enviado
         photo_url = request.FILES.get('photo_url')
         
-        if 'photo_url' in request.FILES:
-            # Eliminar la imagen anterior si existe
+        # Actualizar la foto de producto solo si se proporciona una nueva
+        if photo_url:
+            # Eliminar la foto anterior si existe
             if productphoto.photo_url:
-                productphoto.photo_url = None
-            # Guardar la nueva imagen
-            photo_url = request.FILES['photo_url']
-            productphoto.photo_url = photo_url.read() if photo_url else None
+                productphoto.photo_url.delete()
+            # Guardar la nueva foto
+            productphoto.photo_url = photo_url
         
         productphoto.save()
         return redirect('producto_list')
@@ -211,7 +203,15 @@ def productphoto_edit(request, productphoto_id):
 def productphoto_delete(request, productphoto_id):
     # Obtener la foto de producto a eliminar
     productphoto = get_object_or_404(ProductPhoto, pk=productphoto_id)
-    
+
+    # Eliminar la foto de la carpeta de medios
+    if productphoto.photo_url:
+        # Construir la ruta completa del archivo
+        photo_path = os.path.join(settings.MEDIA_ROOT, str(productphoto.photo_url))
+        # Verificar si el archivo existe y eliminarlo
+        if os.path.exists(photo_path):
+            os.remove(photo_path)
+
     # Eliminar la foto de producto de la base de datos
     productphoto.delete()
 

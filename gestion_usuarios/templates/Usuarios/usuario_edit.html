@@ -15,10 +15,7 @@
     <label for="phone_number">Número de teléfono:</label><br>
     <input type="text" id="phone_number" name="phone_number" value="{{ usuario.phone_number }}"><br>
     <label for="profile_picture">Foto de perfil:</label><br>
-    {% load base64_encode %}
-    {% if usuario.profile_picture %}
-        <img src="data:image/jpeg;base64,{{ usuario.profile_picture|b64encode }}" width="100" height="100"><br>
-    {% endif %}
+    <img src="{{ usuario.profile_picture.url }}" width="100" height="100"><br>
     <input type="file" id="profile_picture" name="profile_picture"><br><br>
     <input type="submit" value="Guardar Cambios">
 </form>
