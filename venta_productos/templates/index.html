@@ -230,9 +230,18 @@
         <div class="content-container-producto-card-foto-contexto">
             
             {% if item.primera_imagen %}
-            <!-- Suponiendo que item.primera_imagen.photo_url es binario y ya has implementado el filtro b64encode -->
-            <img src="data:image/jpeg;base64,{{ item.primera_imagen.photo_url|b64encode }}" class="card-img-top"
-                alt="...">
+                <!-- Suponiendo que item.primera_imagen.photo_url es binario y ya has implementado el filtro b64encode -->
+                {% if item.primera_imagen.photo_url %}
+                    {% if item.primera_imagen.photo_url|is_base64 %}
+                        <img src="data:image/jpeg;base64,{{ item.primera_imagen.photo_url }}" class="card-img-top"
+                            alt="...">
+                    {% else %}
+                        {% with encoded_photo=item.primera_imagen.photo_url|b64encode %}
+                            <img src="data:image/jpeg;base64,{{ encoded_photo }}" class="card-img-top"
+                                alt="...">
+                        {% endwith %}
+                    {% endif %}
+                {% endif %}
             {% endif %}
         </div>
     </div>
@@ -246,8 +255,7 @@
         </div>
     </div>
 </div>
-
-
 {% endfor %}
+
 
 {% endblock %}
